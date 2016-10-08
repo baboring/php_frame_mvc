@@ -1,0 +1,131 @@
+/* So the HTML5 structural tags work in older browsers */
+article, aside, figure, footer, header, nav, section {
+    display: block;
+}
+/* clear selector */
+* {
+	margin: 0;
+	padding: 0;	
+}
+html {
+	background-color: white;
+}
+
+/* the styles for the elements */
+body {
+	width:100%;
+	margin: 0 auto;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+fieldset {
+	clear: both;
+	margin: 10px 20px;
+	padding: 10px;
+}
+
+.box {
+	display: block;
+	width: 400px;
+	margin: 10px auto; 
+	border: 0px solid darkblue;
+	text-align: center;
+}
+/* //////////////////////////////////////////////// */
+.login {
+	display: block;
+	width: 500px;
+	margin: 10px auto; 
+	border: 0px solid darkblue;
+}
+.login label, input , button {
+	padding: 5px 0;
+}
+.login h1 {
+	text-align: center;
+	padding: 10px; 
+}
+.login h2 {
+	text-align: center;
+	padding: 10px;
+	font-size: 1.2em;
+	color: red;
+}
+.login label {
+	clear: left;
+	width: 100px;
+	padding-left: 50px;
+	float: left;
+}
+.login input {
+	margin: 3px 0;
+	padding: 2px 0;
+}
+.login button {
+	margin: 5px auto;
+	width: 120px;
+}
+.login p{
+	margin: 0 10px;
+	text-align:right;
+}
+/* //////////////////////////////////////////////// */
+.signup {
+	display: block;
+	width: 500px;
+	margin: 10px auto; 
+	border: 0px solid darkblue;
+}
+.signup label, input , button {
+	padding: 5px 0;
+}
+.signup label {
+	clear: left;
+	width: 130px;
+	padding-left: 40px;
+	float: left;
+}
+.signup h1 {
+	text-align: center;
+	padding: 10px; 
+}
+.signup h2 {
+	text-align: center;
+	padding: 10px;
+	font-size: 1.2em;
+	color: red;
+}
+.signup h3 {
+	padding: 10px;
+	font-size: 1.2em;
+	color: gray;
+}
+.signup input {
+	margin: 3px 0;
+	padding: 2px 0;
+}
+.signup button {
+	margin: 5px auto;
+	width: 120px;
+}
+.logsignupin p{
+	margin: 0 10px;
+	text-align:right;
+}
+/* //////////////////////////////////////////////// */
+
+#fail, #success {
+	clear: both;
+	font-weight: bold;
+	text-align: center;
+}
+#fail {
+	color: orangered;
+}
+#success {
+	color: black;
+}
+
+
+.hide {display:none;}
+/* //////////////////////////////////////////////// */
