@@ -13,7 +13,7 @@
         }
 
         // fetch list of User Types
-        public static function Fetch_MemberList($type) {
+        public static function Fetch_MemberList($type, $search_group = null, $search_key = null) {
 
             $szWhere = "";
             switch($type) {
@@ -38,6 +38,11 @@
             $szQuery .= "inner join member_type as B ";
             $szQuery .= "on A.type = B.code ";
             $szQuery .= $szWhere;
+
+            // search
+            if(null != $search_key) {
+                $szQuery .= " and substring(A.tel,1,3) = '".$search_key."'";
+            }
 
             //echo 'sql='.$szQuery;
 

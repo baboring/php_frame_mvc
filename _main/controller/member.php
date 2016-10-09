@@ -8,6 +8,7 @@
             require_once ('_views/header.php');
             if(empty($_SESSION["userid"]))
                 exit(0);
+                
             $userData = DataMember::Fetch_MemberInfo($_SESSION["userid"]);
             
             require_once ("_views/form_member_list.php");

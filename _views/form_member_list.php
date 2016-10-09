@@ -1,8 +1,15 @@
 <?php
    //////////////////////////////////////////////////////////////////////////
+    $group = null;
+    if(isset($_GET['group']))
+        $group = $_GET['group'];
+    $search = null;
+    if(isset($_GET['search']))
+        $search = $_GET['search'];
+
 ?>
     <div class="frame">
-        <input type="text" name="search_key" length="25"></input>
+        <input type="text" name="search_key" value="<?=(isset($search))? $search : '';?>" length="25"></input>
         <button name="btnSearch" >Search</button>
 
         <?=DataMember::Fetch_UserTypes(null)[$userData['type']-1][1]?> &nbsp; / &nbsp;
@@ -11,18 +18,18 @@
 
         <table width="900">
             <?php 
-            $firstLine = "<tr>";
-            foreach(DataMember::Fetch_MemberList($userData['type']) as $key=>$row) {
-                    $szLine = "<tr>";
+            $firstLine = "<thead>";
+            foreach(DataMember::Fetch_MemberList($userData['type'],$group,$search) as $key=>$row) {
+                $szLine = "<tr>";
                 foreach($row as $key=>$value) {
                     $szLine .=" <td>".$value."</td>\n";
                     if(null != $firstLine)
-                        $firstLine .=" <td>".$key."</td>\n";
+                        $firstLine .=" <th>".$key."</th>\n";
                 }
                     
-                if(!empty($firstLine)) {
-                    $firstLine.'<td></td>';
-                    echo $firstLine.'</tr>';
+                if(null != $firstLine) {
+                    $firstLine.='<th>button</th>';
+                    echo $firstLine.'</thead>';
                     $firstLine = null;
                 }
                 $szLine.='<td><button class="btnDelete" id="'.$row['idx'].'" name="'.$row['user_name'].'">delete</button></td>';
@@ -99,13 +106,11 @@ window.onload = function() {
     var btnSearch = document.getElementsByName("btnSearch");
     btnSearch[0].addEventListener('click',function(event) {
 
-        var type = "phone";
+        var group = "phone";
         var keyword = document.getElementsByName("search_key")[0].value;
-        alert(type + "/" + keyword);
-
         var params = {};
-        params['type'] = type;
         params['search'] = keyword;
+        params['group'] = group;
         post("<?=Navi::GetUrl(Navi::Member);?>",params,"get");
         
     });
