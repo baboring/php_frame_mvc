@@ -1,8 +1,8 @@
 <?php
 
-    require_once ('_main/member.php');
+    require_once ('_main/data_member.php');
 
-    class MemberJoin {
+    class Join {
         
         public function index() {
             require_once ('_views/header.php');
@@ -39,7 +39,7 @@
             if (!empty($_POST['security_a'])) $inp_security_a = $_POST['security_a'];
                 else $inp_security_a = '';
 
-            if(Member::AddUser(
+            if(DataMember::AddUser(
                 $inp_user_id,
                 $inp_user_name,
                 $inp_password,
@@ -52,15 +52,15 @@
                 $inp_license,
                 $inp_ohip)) {
                     // success so, move to login
-                    //Application::Redirect(URL.Navi::MemberJoin,'Success');
+                    //Application::Redirect(URL.Navi::Join,'Success');
 
                     $display = '?display=Register Success!!';
-                    $url = URL.Navi::MemberLogin;
+                    $url = Navi::GetUrl(Navi::Login);
                     require_once ("_views/form_result.php");
                     exit(0);
                 }
             // fails
-            $error_msg = "fail to create account <br>".Member::$err_msg;            
+            $error_msg = "fail to create account <br>".DataMember::$err_msg;            
             require_once ("_views/form_join.php");
             require_once ('_views/footer.php');
         }

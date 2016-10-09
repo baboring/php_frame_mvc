@@ -2,13 +2,17 @@
    //////////////////////////////////////////////////////////////////////////
 ?>
     <div class="frame">
-        <?=Member::Fetch_UserTypes(null)[$userData['type']-1][1]?> &nbsp; / &nbsp;
+        <input type="text" name="search_key" length="25"></input>
+        <button name="btnSearch" >Search</button>
+
+        <?=DataMember::Fetch_UserTypes(null)[$userData['type']-1][1]?> &nbsp; / &nbsp;
         <?=$userData['user_name']?> &nbsp;
-        <a href="<?php echo URL.Navi::MemberLogin; ?>/logout" ><button>Logout</button></a> 
+        <a href="<?=Navi::GetUrl(Navi::Login,'logout');?>" ><button>Logout</button></a> <br>
+
         <table width="900">
             <?php 
             $firstLine = "<tr>";
-            foreach(Member::Fetch_MemberList($userData['type']) as $key=>$row) {
+            foreach(DataMember::Fetch_MemberList($userData['type']) as $key=>$row) {
                     $szLine = "<tr>";
                 foreach($row as $key=>$value) {
                     $szLine .=" <td>".$value."</td>\n";
@@ -21,7 +25,7 @@
                     echo $firstLine.'</tr>';
                     $firstLine = null;
                 }
-                $szLine.='<td><button class="delButton" name="'.$row['idx'].'">delete</button></td>';
+                $szLine.='<td><button class="btnDelete" id="'.$row['idx'].'" name="'.$row['user_name'].'">delete</button></td>';
                 echo $szLine.='</tr>';
             }; ?>
         </table>
@@ -79,22 +83,41 @@ table tr td, th{
 
 <!-- local script functions -->
 <script>
-/*toggle between hiding and showing the dropdown content */
-function clickDelete( idx ) {
-    document.location = "?delete="+idx;
-
-    post('?', {delete: idx});
-}
-
 window.onload = function() {
 
-    var buttons = [];
-    var buttons = document.getElementsByClassName("delButton");
+    function clickDelete( idx, user_name ) {
+        //document.location = "<?=Navi::GetUrl(Navi::Join,'delete');?>/"+val;
+        if(confirm("[Delete] Are you sure '" + user_name + "' ?")) {
+            var params = {};
+            params['idx'] = val;
+            params['name'] = user_name;
+            post("<?=Navi::GetUrl(Navi::Member,'delete');?>",params,"post");
+        }
+    }
+
+
+    var btnSearch = document.getElementsByName("btnSearch");
+    btnSearch[0].addEventListener('click',function(event) {
+
+        var type = "phone";
+        var keyword = document.getElementsByName("search_key")[0].value;
+        alert(type + "/" + keyword);
+
+        var params = {};
+        params['type'] = type;
+        params['search'] = keyword;
+        post("<?=Navi::GetUrl(Navi::Member);?>",params,"get");
+        
+    });
+    //btnSearch.addEventListener('click',function (event) {});
+    
+    var buttons = document.getElementsByClassName("btnDelete");
     for(var i=0; i<buttons.length; i++) {
-        var button = buttons[i];
-        button.addEventListener('click',function() {
-            clickDelete(button.name);
-        });
+        (function(n) {
+            buttons[n].addEventListener('click',function(event) {
+                clickDelete(buttons[n].id, buttons[n].name);
+            });
+        })(i);
     }
 };
 </script>

@@ -6,9 +6,17 @@
  desc : 
 ------------------------------------------------------------- */
 final class Navi extends Enum{
-    const MemberLogin = 'MemberLogin';
-    const MemberJoin = 'MemberJoin';
-    const MemberList = 'MemberList';
+    const Login = 'login';
+    const Join = 'join';
+    const Member = 'member';
+
+    // get path
+    public static function GetUrl( $path, $action = null) {
+        $res = URL.$path;
+        if(null != $action)
+            $res .= '/'.$action;
+        return $res;
+    }
 }
 
 

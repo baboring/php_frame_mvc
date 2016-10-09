@@ -1,7 +1,7 @@
 <?php
     //////////////////////////////////////////////////////////////////////////
 ?>
-    <form action="<?php echo URL.Navi::MemberJoin; ?>/try_join" method="post">
+    <form action="<?=Navi::GetUrl(Navi::Join,'try_join');?>" method="post">
     <div class="signup">
         <h1>Sign up</h1>
         <fieldset>
@@ -9,7 +9,7 @@
             <label>Type : </label>
             <select id="memberType" name="type">
             <?php 
-                foreach(Member::Fetch_UserTypes(PDO::FETCH_ASSOC) as $key=>$value) {
+                foreach(DataMember::Fetch_UserTypes(PDO::FETCH_ASSOC) as $key=>$value) {
                     echo '<option value="'.$value['code'].'">'.$value['type'].'</option>';
                 }; ?>
             </select><br>
@@ -67,7 +67,7 @@ window.onload = function() {
     show("opt_1");
 
     document.getElementById("back").addEventListener('click', function () {
-        document.location.href = "<?php echo URL.Navi::MemberLogin; ?>";
+        document.location.href = "<?=Navi::GetUrl(Navi::Login);?>";
     });
 
 };

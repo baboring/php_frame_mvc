@@ -1,7 +1,7 @@
 <?php
     require_once ('_main/libs/db_connect.php');
 
-    class Member
+    class DataMember
     {
         public static $err_msg = '';
 
@@ -54,12 +54,31 @@
 
         
         // delete user account
-        public static function DeleteUser($user_id) {
+        public static function DeleteUserById($user_id) {
             if(strlen(trim($user_id) < 1)) {
                 self::$err_msg = 'need a userid';
                 return false;
             }
             $szQuery = "delete from member_list where user_id = '".$user_id."'";
+            
+            try {
+                $res = dbCon::GetConnection()->exec($szQuery);
+                if(!empty($res) && $res > 0)
+                   return true;
+                self::$err_msg = 'not exist userid';
+            }
+            catch(Exception $e) { //Some error occured. (i.e. violation of constraints)
+                echo $e;
+            }
+            return false;
+        }
+
+        public static function DeleteUserByIdx($idx) {
+            if(strlen(trim($idx) < 1)) {
+                self::$err_msg = 'need a idx';
+                return false;
+            }
+            $szQuery = "delete from member_list where idx = ".$idx;
             
             try {
                 $res = dbCon::GetConnection()->exec($szQuery);
@@ -142,7 +161,7 @@
 
             // verify if matching id & pass
             if(empty($user_id)) {
-                Member::$err_msg = 'Error User id is empty'; 
+                self::$err_msg = 'Error User id is empty'; 
                 return false;
             }
 
@@ -150,13 +169,13 @@
             $res =  dbCon::GetConnection()->query($szQuery);
 
             if($res->rowCount() < 1) {
-                Member::$err_msg = 'Not exist user id';
+                self::$err_msg = 'Not exist user id';
                 return false;
             }
 
             $data = $res->fetch();
             if($data['password'] != $password) {
-                Member::$err_msg = 'Password is Wrong!!!';
+                self::$err_msg = 'Password is Wrong!!!';
                 return false;
             }
 

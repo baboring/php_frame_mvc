@@ -28,7 +28,7 @@ class Application  {
         $params = explode('/', $url);
 		$counts = count($params);
 		// default 
-		self::$controller = Navi::MemberLogin;
+		self::$controller = Navi::Login;
 
         if(isset($params[0]) && $params[0])
 			self::$controller = $params[0];
@@ -86,22 +86,9 @@ class Application  {
     }
 
     //
-    public static function Redirect($mainCategoty,$action = null) {
-        if(isset($action))
-            $action = '/'.$action;
+    public static function Redirect($categoty,$action = null) {
 
-        switch($mainCategoty){
-            case Navi::MemberLogin:
-                header('location: '.URL.Navi::MemberLogin.$action);
-                break;
-            case Navi::MemberJoin:
-                header('location: '.URL.Navi::MemberJoin.$action);
-                break;
-            case Navi::MemberList:
-                header('location: '.URL.Navi::MemberList.$action);
-                break;
-        }
-        $main = $mainCategoty;
+		 header('location: '.Navi::GetUrl($categoty,$action));
     }
 }
 ?>

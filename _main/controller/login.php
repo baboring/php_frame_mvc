@@ -1,6 +1,6 @@
 <?php
 
-    class MemberLogin {
+    class Login {
         
         public function index() {
             require_once ('_views/header.php');
@@ -10,7 +10,7 @@
         }
 
         public function try_login() {
-            require_once ('_main/member.php');
+            require_once ('_main/data_member.php');
             require_once ('_views/header.php');
 
             $inp_userid = "";
@@ -21,12 +21,12 @@
             if (!empty($_POST['password']) && filter_has_var(INPUT_POST,"password"))
                 $inp_password = $_POST['password'];
 
-            if(Member::TryLogin($inp_userid, $inp_password)) {
+            if(DataMember::TryLogin($inp_userid, $inp_password)) {
                 $_SESSION["userid"] = $inp_userid;
-                Application::Redirect(Navi::MemberList);
+                Application::Redirect(Navi::Member);
                 exit(0);
             } else {
-                $error_msg = "<h2>".Member::$err_msg."</h2>";
+                $error_msg = "<h2>".DataMember::$err_msg."</h2>";
             }
             ///////////////////////////////////////////
             require_once ("_views/form_login.php");
