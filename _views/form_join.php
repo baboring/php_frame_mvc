@@ -4,6 +4,8 @@
     <form action="<?=Navi::GetUrl(Navi::Join,'try_join');?>" method="post">
     <div class="signup">
         <h1>Sign up</h1>
+        <div style="text-align:right;">
+            <input style="padding:2px;margin-right:20px;" id="back" type="button" value="return to login"></input></div> 
         <fieldset>
             <h3>type information</h3>
             <label>Type : </label>
@@ -26,8 +28,9 @@
             <h3>member information</h3>
             <label>Full Name : </label><input type="text" name="user_name"><br>
             <label>User ID : </label><input type="text" name="user_id"><br>
-            <label>Password : </label><input type="text" name="password"><br>
-            <label>Pwd Confirm : </label><input type="text" name="password"><br>
+            <label>Password : </label><input type="text" id="password" name="password"> &nbsp;
+                                      <input type="button" id="random_pwd" value="Random"><br>
+            <label>Pwd Confirm : </label><input type="text" id="password_cfm" name="password_cfm"><br>
             <label>Tel Number : </label><input type="text" name="tel"><br>
             <label>Email : </label><input type="text" name="email"><br>
 
@@ -38,7 +41,6 @@
 
         <div style="text-align:center;">
             <button type="submit"> register</button> <br>
-            <input id="back" type="button" value="return to login"></input>
         </div> 
         <br><br>
         <?php if(isset($error_msg)) echo "<h2>".$error_msg.'</h2>';?>
@@ -57,7 +59,40 @@ function selectOne(curr) {
     }
 }
 
+function generateRandPwd(digits) {
+
+    var symbols = "~!@#$%^&*()-_=+[]{};:,.<>?";     // etc
+
+    var pwd = "";
+    for(i=0;i<digits;++i) {
+        switch(getRandomInt(0,3)){
+            case 0:
+                pwd += String.fromCharCode(getRandomInt(48,57));    // number
+                break;
+            case 1:
+                pwd += String.fromCharCode(getRandomInt(65,90));    // upper letter 
+                break;
+            case 2:
+                pwd += String.fromCharCode(getRandomInt(97,122));   // lower letter
+                break;
+            case 3:
+                pwd += symbols[getRandomInt(0,symbols.length-1)];
+                break;
+        }
+    }
+    return pwd;
+}
+
 window.onload = function() {
+
+    document.getElementById("random_pwd")
+    .addEventListener('click', function () {
+        
+        var ranPwd = generateRandPwd(8);
+        document.getElementById("password").value = ranPwd  
+        document.getElementById("password_cfm").value = ranPwd; 
+    });
+    
 
     var myselect = document.getElementById("memberType");
     myselect.addEventListener('change', function () {

@@ -6,7 +6,7 @@
  desc : This is only one object in this system.
 ------------------------------------------------------------- */
 require_once ('_main/enum.php');
-require_once ('_main/libs/request.php');
+require_once ('_main/libs/functions.php');
 require_once ('_main/libs/controller.php');
 
 class Application  {

@@ -92,6 +92,21 @@ function redirect_post_by_header($url, $data) {
   header("Location: ".$url);
 }
 
+/* ============================================================================
+Random Password
+============================================================================ */
+function randomPassword($pwd_length) {
+  $symbol = '~!@#$%^&*()-_=+[]{};:,.<>?';     // etc
+  $symbol_count = strlen($symbol);
+  $index = mt_rand(0,$symbol_count-1);
+  $password = substr($symbol,$index, 1); 
+  $password .= chr(mt_rand(48,57)); // number
+  $password .= chr(mt_rand(65,90)); // upper letter
 
+  // Add Lowercase letters to reach the specified length
+  while(strlen($password) < $pwd_length) 
+    $password .=  chr(mt_rand(97,122));
 
+  $password = str_shuffle($password);
+}
 ?>

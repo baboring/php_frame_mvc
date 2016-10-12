@@ -47,3 +47,11 @@ function post(path, params, method) {
     document.body.appendChild(form);
     form.submit();
 }
+
+
+/* -------------------------------------------------------------
+ purpos : random
+------------------------------------------------------------- */
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
