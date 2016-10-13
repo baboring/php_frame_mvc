@@ -55,3 +55,28 @@ function post(path, params, method) {
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+
+function generateRandPwd(digits) {
+
+    var symbols = "~!@#$%^&*()-_=+[]{};:,.<>?";     // etc
+
+    var pwd = "";
+    for(i=0;i<digits;++i) {
+        switch(getRandomInt(0,3)){
+            case 0:
+                pwd += String.fromCharCode(getRandomInt(48,57));    // number
+                break;
+            case 1:
+                pwd += String.fromCharCode(getRandomInt(65,90));    // upper letter 
+                break;
+            case 2:
+                pwd += String.fromCharCode(getRandomInt(97,122));   // lower letter
+                break;
+            case 3:
+                pwd += symbols[getRandomInt(0,symbols.length-1)];
+                break;
+        }
+    }
+    return pwd;
+}

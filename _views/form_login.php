@@ -11,7 +11,7 @@
         <fieldset>
             <br><br>
             <label>User ID : </label><input type="text" name="userid" value="<?=$inp_userid?>"><br>
-            <label>Password : </label><input type="text" name="password" value="<?=$inp_password?>"><br>
+            <label>Password : </label><input type="password" name="password" value="<?=$inp_password?>"><br>
             
             <label></label><button type="submit"> Login</button> <br>
 

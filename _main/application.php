@@ -5,9 +5,10 @@
  date : Oct 10, 2016
  desc : This is only one object in this system.
 ------------------------------------------------------------- */
-require_once ('_main/enum.php');
 require_once ('_main/libs/functions.php');
 require_once ('_main/libs/controller.php');
+require_once ('_main/enum.php');
+require_once ('_main/GlobalData.php');
 
 class Application  {
 

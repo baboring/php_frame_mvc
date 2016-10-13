@@ -96,7 +96,8 @@ function redirect_post_by_header($url, $data) {
 Random Password
 ============================================================================ */
 function randomPassword($pwd_length) {
-  $symbol = '~!@#$%^&*()-_=+[]{};:,.<>?';     // etc
+  //$symbol = '~!@#$%^&*()-_=+[]{};:,.<>?';     // etc
+  $symbol = '^';     // etc
   $symbol_count = strlen($symbol);
   $index = mt_rand(0,$symbol_count-1);
   $password = substr($symbol,$index, 1); 
@@ -108,5 +109,7 @@ function randomPassword($pwd_length) {
     $password .=  chr(mt_rand(97,122));
 
   $password = str_shuffle($password);
+
+  return $password;
 }
 ?>

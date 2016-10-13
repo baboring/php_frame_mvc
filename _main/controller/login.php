@@ -21,12 +21,27 @@
             if (!empty($_POST['password']) && filter_has_var(INPUT_POST,"password"))
                 $inp_password = $_POST['password'];
 
-            if(DataMember::TryLogin($inp_userid, $inp_password)) {
-                $_SESSION["userid"] = $inp_userid;
+            require_once ('_main/models/DataResult_LoginTry.php');
+
+            $result = new DataResult_LoginTry($inp_userid, $inp_password);
+
+            // login check
+            if(null == $result->err_msg) {
+                GlobalData::SetLoggedIn($inp_userid);
+                GlobalData::SetDebug($result->expire_date);
                 Application::Redirect(Navi::Member);
                 exit(0);
-            } else {
-                $error_msg = "<h2>".DataMember::$err_msg."</h2>";
+            }
+            else{
+                if( $result->err_msg == 'expired password date') {
+                    GlobalData::SetUserID($inp_userid);
+                    $display = $result->err_msg;
+                    $button = 'Change Password';
+                    $url = Navi::GetUrl(Navi::Member,'update');
+                    require_once ("_views/form_alert.php");
+                    exit(0);
+                }
+                $error_msg = "<h2>".$result->err_msg."</h2>";
             }
             ///////////////////////////////////////////
             require_once ("_views/form_login.php");
@@ -34,7 +49,7 @@
         }
 
         public function logout() {
-            $_SESSION["userid"] = null;
+            GlobalData::SetLoggedOut();
             $this->index();
         }
     }

@@ -8,3 +8,7 @@
 <script src="<?php echo URL; ?>public/js/functions.js"></script>
 
 <body>
+<?php 
+	require_once ('_views/div_top.php');
+
+?>

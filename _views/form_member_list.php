@@ -9,12 +9,11 @@
 
 ?>
     <div class="frame">
+        <?php if($userData['type'] == 1) { ?>
         <input type="text" name="search_key" value="<?=(isset($search))? $search : '';?>" length="25"></input>
         <button name="btnSearch" >Search</button>
-
+        <?php } ?>
         <?=DataMember::Fetch_UserTypes(null)[$userData['type']-1][1]?> &nbsp; / &nbsp;
-        <?=$userData['user_name']?> &nbsp;
-        <a href="<?=Navi::GetUrl(Navi::Login,'logout');?>" ><button>Logout</button></a> <br>
 
         <table width="900">
             <?php 

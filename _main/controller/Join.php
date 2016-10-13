@@ -7,6 +7,8 @@
         public function index() {
             require_once ('_views/header.php');
             ///////////////////////////////////////////
+            if (!empty($_GET['pwd'])) $inp_password = $_GET['pwd'];
+                else $inp_password = '';            
             require_once ("_views/form_join.php");
             require_once ('_views/footer.php');
         }
@@ -24,12 +26,12 @@
             if (!empty($_POST['ohip'])) $inp_ohip = $_POST['ohip'];
                 else $inp_ohip = '';
 
-            if (!empty($_POST['user_name'])) $inp_user_name = $_POST['user_name'];
-                else $inp_user_name = '';
             if (!empty($_POST['user_id']) && filter_has_var(INPUT_POST,"user_id")) $inp_user_id = $_POST['user_id'];
                 else $inp_user_id = '';
             if (!empty($_POST['password'])) $inp_password = $_POST['password'];
                 else $inp_password = '';
+            if (!empty($_POST['user_name'])) $inp_user_name = $_POST['user_name'];
+                else $inp_user_name = '';
             if (!empty($_POST['tel'])) $inp_tel = $_POST['tel'];
                 else $inp_tel = '';
             if (!empty($_POST['email'])) $inp_email = $_POST['email'];
@@ -54,9 +56,10 @@
                     // success so, move to login
                     //Application::Redirect(URL.Navi::Join,'Success');
 
-                    $display = '?display=Register Success!!';
+                    $display = 'Register Success!!';
+                    $button = 'Next';
                     $url = Navi::GetUrl(Navi::Login);
-                    require_once ("_views/form_result.php");
+                    require_once ("_views/form_alert.php");
                     exit(0);
                 }
             // fails

@@ -114,6 +114,7 @@
             $szQuery .= ",email";
             $szQuery .= ",security_q";
             $szQuery .= ",security_a";
+            $szQuery .= ",expire_date";
             $szQuery .= ",type";
             switch($type) {
                 case "1":
@@ -134,6 +135,7 @@
             $szQuery .= ",'".$email."'";
             $szQuery .= ",'".$security_q."'";
             $szQuery .= ",'".$security_a."'";
+            $szQuery .= ",'".date("Y-m-d H:i:s",strtotime('+30 seconds'))."'";
             $szQuery .= ",'".$type."'";
             switch($type) {
                 case "1":
@@ -156,36 +158,43 @@
             }
             catch(Exception $e)  {  //Some error occured. (i.e. violation of constraints)
                 self::$err_msg = $e;
+                GlobalData::SetDebug($szQuery);
                 echo $e;
             }
             return false;
         }
 
-        // try login 
-        public static function tryLogin($user_id, $password) {
+        // update user record
+        public static function Update($user_id, $user_name, $password, $tel, $email, $security_q, $security_a) {
 
-            // verify if matching id & pass
-            if(empty($user_id)) {
-                self::$err_msg = 'Error User id is empty'; 
+            if(empty($user_id) || strlen($user_id) < 1) {
+                self::$err_msg = 'Error User id is empty';
                 return false;
             }
 
-            $szQuery = "select password from member_list where user_id = '".$user_id."' limit 1"; 
-            $res =  dbCon::GetConnection()->query($szQuery);
+            // insert query
+            $szQuery = "update member_list set ";
+            $szQuery .= "user_name = '".$user_name."'";
+            $szQuery .= ",password = '".$password."'";
+            $szQuery .= ",tel = '".$tel."'";
+            $szQuery .= ",email = '".$email."'";
+            $szQuery .= ",security_q = '".$security_q."'";
+            $szQuery .= ",security_a = '".$security_a."'";
+            $szQuery .= ",expire_date = '".date("Y-m-d H:i:s",strtotime('+30 seconds'))."'";
+            $szQuery .= " where user_id = '".$user_id."'";
+            //echo 'query='.$szQuery;
 
-            if($res->rowCount() < 1) {
-                self::$err_msg = 'Not exist user id';
-                return false;
+            try {
+                $res = dbCon::GetConnection()->exec($szQuery);
+                if(!empty($res)) 
+                   return true;
             }
-
-            $data = $res->fetch();
-            if($data['password'] != $password) {
-                self::$err_msg = 'Password is Wrong!!!';
-                return false;
+            catch(Exception $e)  {  //Some error occured. (i.e. violation of constraints)
+                self::$err_msg = $e;
+                echo $e;
             }
-
-            // success
-            return true;
+            return false;
         }
     }
+
 ?>

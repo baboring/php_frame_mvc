@@ -26,11 +26,12 @@
             </div>
 
             <h3>member information</h3>
-            <label>Full Name : </label><input type="text" name="user_name"><br>
             <label>User ID : </label><input type="text" name="user_id"><br>
-            <label>Password : </label><input type="text" id="password" name="password"> &nbsp;
+            <label>Password : </label><input type="password" id="password" name="password" value="<?=$inp_password?>"> &nbsp;
                                       <input type="button" id="random_pwd" value="Random"><br>
-            <label>Pwd Confirm : </label><input type="text" id="password_cfm" name="password_cfm"><br>
+            <label>Pwd Confirm : </label><input type="password" id="password_cfm" name="password_cfm" value="<?=$inp_password?>"> &nbsp;
+                                        <span style="font-weight:bold;color:red;"><?=$inp_password?></span><br>
+            <label>Full Name : </label><input type="text" name="user_name"><br>
             <label>Tel Number : </label><input type="text" name="tel"><br>
             <label>Email : </label><input type="text" name="email"><br>
 
@@ -59,38 +60,16 @@ function selectOne(curr) {
     }
 }
 
-function generateRandPwd(digits) {
-
-    var symbols = "~!@#$%^&*()-_=+[]{};:,.<>?";     // etc
-
-    var pwd = "";
-    for(i=0;i<digits;++i) {
-        switch(getRandomInt(0,3)){
-            case 0:
-                pwd += String.fromCharCode(getRandomInt(48,57));    // number
-                break;
-            case 1:
-                pwd += String.fromCharCode(getRandomInt(65,90));    // upper letter 
-                break;
-            case 2:
-                pwd += String.fromCharCode(getRandomInt(97,122));   // lower letter
-                break;
-            case 3:
-                pwd += symbols[getRandomInt(0,symbols.length-1)];
-                break;
-        }
-    }
-    return pwd;
-}
-
 window.onload = function() {
 
     document.getElementById("random_pwd")
     .addEventListener('click', function () {
-        
+        /*
         var ranPwd = generateRandPwd(8);
         document.getElementById("password").value = ranPwd  
         document.getElementById("password_cfm").value = ranPwd; 
+        */
+        document.location.href = "<?=Navi::GetUrl(Navi::Join,'?pwd='.randomPassword(4));?>";
     });
     
 
