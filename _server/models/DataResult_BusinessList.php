@@ -12,7 +12,9 @@
             parent::__construct();
             //using mysql to find out total records
             $totalRecords = dbCon::GetConnection()->query("Select count(*) from business");
-            $this->total = $totalRecords->fetchColumn() / $this->itemsPerPage + 1;
+            $count = $totalRecords->fetchColumn();
+            $this->total = ceil($count / $this->itemsPerPage);
+            $this->textNav = true;
             parent::paginate();
 
             $szQuery = 'Select ';

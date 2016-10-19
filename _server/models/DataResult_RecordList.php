@@ -18,7 +18,10 @@
             $totalRecords = dbCon::GetConnection()->query($szCount);
             if($limit != null)
                 $this->itemsPerPage = $limit;
-            $this->total = $totalRecords->fetchColumn() / $this->itemsPerPage + 1;
+            $this->total = $totalRecords->fetchColumn() / $this->itemsPerPage;
+            $count = $totalRecords->fetchColumn();
+            $this->total = ceil($count / $this->itemsPerPage);
+            $this->textNav = true;
             parent::paginate();
         
             // look up records

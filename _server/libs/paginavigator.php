@@ -105,7 +105,7 @@ class Paginator {
         {
             $html = '<ul class="pagination">';
             //previous link button
-            if($this->textNav&&($this->currentPage>1)){
+            if($this->textNav && ($this->currentPage>1)){
                 $html .= '<li><a href="'.$this->_link .'?current='.($this->currentPage-1).'"';
                 $html .= '>'.$this->_navigation['pre'].'</a></li>';
             }
