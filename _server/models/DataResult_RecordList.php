@@ -18,11 +18,8 @@
             $totalRecords = dbCon::GetConnection()->query($szCount);
             if($limit != null)
                 $this->itemsPerPage = $limit;
-            $this->total = $totalRecords->fetchColumn() / $this->itemsPerPage;
-            $count = $totalRecords->fetchColumn();
-            $this->total = ceil($count / $this->itemsPerPage);
             $this->textNav = true;
-            parent::paginate();
+            parent::paginate($totalRecords->fetchColumn());
         
             // look up records
             $szQuery = "select R.r_uid, concat(C.first_name,' ',C.last_name) as `Name`, R.s_uid, R.r_desc, R.r_status, R.r_date ";

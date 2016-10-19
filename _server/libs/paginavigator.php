@@ -42,8 +42,10 @@ class Paginator {
         * @access public
         * @return type
         */
-        public function paginate()
+        public function paginate($total_row_count)
         {
+            $this->total = ceil($total_row_count / $this->itemsPerPage);
+            
             //get current page
             if(isset($_GET['current']))
                 $this->currentPage = $_GET['current'];

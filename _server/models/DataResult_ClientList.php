@@ -12,10 +12,8 @@
             parent::__construct();
             //using mysql to find out total records
             $totalRecords = dbCon::GetConnection()->query("Select count(*) from client");
-            $count = $totalRecords->fetchColumn();
-            $this->total = ceil($count / $this->itemsPerPage);
             $this->textNav = true;
-            parent::paginate();
+            parent::paginate($totalRecords->fetchColumn());
 
             $szQuery = 'Select ';
             $szQuery .= 'cid as `no` ';
