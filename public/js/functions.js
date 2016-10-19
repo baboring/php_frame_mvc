@@ -80,3 +80,17 @@ function generateRandPwd(digits) {
     }
     return pwd;
 }
+
+function HistoryBack() {
+    window.history.back();
+}
+function GoUrl(url) {
+    document.location.href = url;
+}
+
+function var_dump(obj) {
+    str = JSON.stringify(obj);
+    str = JSON.stringify(obj, null, 4); // (Optional) beautiful indented output.
+    //console.log(str); // Logs output to dev tools console.
+    return str; // Displays output using window.alert()
+}

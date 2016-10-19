@@ -1,6 +1,12 @@
-/* So the HTML5 structural tags work in older browsers */
-article, aside, figure, footer, header, nav, section {
-    display: block;
+/* reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
 }
 /* clear selector */
 * {
@@ -11,39 +17,83 @@ html {
 	background-color: white;
 }
 
-/* the styles for the elements */
-body {
-	width:100%;
-	text-align: center;
-	margin: 0 auto;
-	font-family: Arial, Helvetica, sans-serif;
+
+/* type */
+body { font-family:"Open Sans" ,Sans-Serif; font-size:12px; line-height:14px; background-repeat:repeat-x; }
+h1, h1 a { font-size:20px; line-height:20px; }
+h2, h2 a { font-size:18px; line-height:18px; }
+h3, h3 a { font-size:15px; line-height:15px; }
+
+.top {
+	height:25px;
+	vertical-align: bottom;
+	background-color: darkgrey;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+.head {
+	width: 850px;
+	margin: 8px auto;
+	text-align: left;
+	padding:0 10px;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+}
+.head_right {
+	float: right;
+	width: 400px;
+	text-align: right;
+	font-weight: bold;
 }
 
-fieldset {
-	clear: both;
-	margin: 10px 20px;
-	padding: 10px;
-	border-radius: 10px 20px 0 20px;
-	box-shadow: 1px 1px 10px 1px black;
-
+.contents {
+	width: 850px;
+	margin: 8px auto;
+	border: 0px solid black;
 }
+
 
 .box {
+	margin: 10px 20px;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 1px 1px 10px 1px black;
+	
+}
+
+.box h1 {
+    margin: 0 0 0.2em;
+    font-size: 40px;
+    line-height: 40px;
+    font-family: "Open Sans",sans-serif;
+    font-weight: bold;
+}
+
+.box h2 {
+    font-size: 50px;
+    line-height: 56px;
+    margin: 0 0 0.5em;
+    font-family: "Open Sans",sans-serif;
+    font-weight: bold
+}
+
+.box h3 {
+    font-size: 30px;
+    line-height: 1.15em;
+    margin: 0;
+    font-family: "Open Sans",sans-serif;
+    font-weight: bold;
+}
+
+/* //////////////////////////////////////////////// */
+.login {
 	display: block;
 	width: 400px;
 	margin: 10px auto; 
 	border: 0px solid darkblue;
-	text-align: center;
-}
-/* //////////////////////////////////////////////// */
-.login {
-	display: block;
-	width: 500px;
-	margin: 10px auto; 
-	border: 0px solid darkblue;
 	text-align: left;
 }
-.login label, input , button {
+.login label {
 	padding: 5px 0;
 }
 .login h1 {
@@ -56,41 +106,20 @@ fieldset {
 	font-size: 1.2em;
 	color: red;
 }
-.login label {
-	clear: left;
-	width: 100px;
-	padding-left: 50px;
-	float: left;
-}
-.login input {
-	margin: 3px 0;
-	padding: 2px 0;
-}
-.login button {
-	margin: 5px auto;
-	width: 120px;
-}
-.login p{
-	margin: 0 10px;
-	text-align:right;
-}
+
 /* //////////////////////////////////////////////// */
 .signup {
 	display: block;
-	width: 500px;
+	width: 600px;
 	margin: 10px auto; 
 	border: 0px solid darkblue;
 	text-align: left;
 }
-.signup label, input , button {
+.signup label, button {
 	padding: 5px 0;
 }
-.signup label {
-	clear: left;
-	width: 130px;
-	padding-left: 40px;
-	float: left;
-}
+
+/* //////////////////////////////////////////////// */
 .signup h1 {
 	text-align: center;
 	padding: 10px; 
@@ -107,7 +136,7 @@ fieldset {
 	color: gray;
 }
 .signup input {
-	margin: 3px 0;
+	margin: 1px 0;
 	padding: 2px 0;
 }
 .signup button {
@@ -119,12 +148,34 @@ fieldset {
 	text-align:right;
 }
 /* //////////////////////////////////////////////// */
-.top {
-	height:30px;
-	text-align: right;
-	padding: 2px;
-	background-color: darkgrey;
+.data_account {
+	display: block;
+	width: 600px;
+	margin: 10px auto; 
+	border: 0px solid darkblue;
+	text-align: left;
+	line-height: 1.9em;
 }
+.data_account label {
+	margin: 1px 0;
+}
+.data_account input {
+	margin: 1px 0;
+	padding: 2px 0;
+}
+/* //////////////////////////////////////////////// */
+.left_float label {
+	clear: left;
+	float: left;
+	width: 120px;
+	padding-left: 40px;
+}
+.left_float p {
+	float: right;
+	width: 70%;
+	text-align:left;
+}
+/* //////////////////////////////////////////////// */
 
 #fail, #success {
 	clear: both;
@@ -138,6 +189,211 @@ fieldset {
 	color: black;
 }
 
+#clear {
+	clear:both;
+}
 
+
+fieldset {
+	margin: 10px 0;
+	padding: 10px;
+	border: 1px solid #4CAF50;
+	column-count:2;
+	column-gap:20px;
+}
+fieldset legend {
+	padding: 5px;
+	font-size: 1.8em;
+}
+fieldset label {
+	clear: left;
+}
+
+.clear {
+	clear: both;
+}
+.button /* secondary buttons */
+{
+	padding: 5px 50px;
+    color:#000; /* font color */
+    border:1px solid #9f9f9f;
+    background-color:#898989; /* solid colour alternative for browsers that do not support gradients */
+	border-radius: 5px;
+
+    /* choose the gradient-from and gradient-to colours and replace them in EACH of the rules below */
+    background-image:-webkit-gradient(linear, left top, left bottom, from(#cecece), to(#898989));
+    background-image:-webkit-linear-gradient(top, #cecece, #898989);
+    background-image:-moz-linear-gradient(top, #cecece, #898989);
+    background-image:-ms-linear-gradient(top, #cecece, #898989);
+    background-image:-o-linear-gradient(top, #cecece, #898989);
+    background-image:linear-gradient(top, #cecece, #898989);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#cecece', EndColorStr='#898989');
+}
+a.button {
+    height: 26px;
+}
+a.button:hover {
+    color: #FFF;
+}
+.primary /* primary button */
+{
+    color:#FFF; /* font color */
+    border:1px solid #16a085;
+    background-color:#1abc9c; /* solid colour alternative for browsers that do not support gradients */
+
+    /* choose the gradient-from and gradient-to colours and replace them in EACH of the rules below */
+    background-image:-webkit-gradient(linear, left top, left bottom, from(#fbbc87), to(#e76a00));
+    background-image:-webkit-linear-gradient(top, #fbbc87, #e76a00);
+    background-image:-moz-linear-gradient(top, #fbbc87, #e76a00);
+    background-image:-ms-linear-gradient(top, #fbbc87, #e76a00);
+    background-image:-o-linear-gradient(top, #fbbc87, #e76a00);
+    background-image:linear-gradient(top, #fbbc87, #e76a00);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fbbc87', EndColorStr='#e76a00');
+}
+
+input.textbox {
+    width:100%;
+    display:block;
+    height:22px;
+    border:1px solid #b3b3b3;
+	background-color: #cecece;
+    -webkit-border-radius:1px;
+    -moz-border-radius:1px;
+    border-radius:1px;
+    -moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
+    -webkit-box-shadow:0 3px 5px -2px #999;
+    -moz-box-shadow:0 3px 5px -2px #999;
+    box-shadow:0 3px 5px -2px #999;
+    padding:2px;
+}
+
+.row {
+    clear: both;
+    margin-bottom: 10px;
+    float: left;
+    width: 100%;
+    white-space: nowrap;
+}
+.center_row {
+    clear: both;
+ 	text-align: center;
+}
+
+.left_navi {
+	float:left;
+	width:70px;
+	text-align: center;
+	padding: 20px 0;
+	border-radius: 10px;
+	border:1px solid black;
+}
+/* -------------------------------------- */
+.frame {
+	float:right;
+	display: block;
+	width: 770px;
+	border: 1px solid darkblue;
+}
+.frame button{
+	padding: 0 3px;
+}
+.frame h1 {
+	background-color: #b3b3b3;
+	padding: 5px 0;
+}
+/* -------------------------------------- */
+ul.horizontal {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+ul.horizontal li {
+    float: left;
+}
+
+ul.horizontal li a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 7px 16px;
+    text-decoration: none;
+}
+
+ul.horizontal li a:hover:not(.active) {
+    background-color: #000;
+}
+
+ul.horizontal li a.active {
+    background-color:#4CAF50;
+}
+
+/* -------------------------------------- */
+table{
+  margin:10px auto;
+  border: 0px solid black;
+  border-spacing: 0px;
+   text-align: left;
+}
+
+table thead tr{
+  font-family: Arial, monospace;
+  font-size: 14px;
+}
+
+table thead tr th{
+  border-bottom: 2px solid black;
+  border-top: 1px solid black;
+  margin: 0px;
+  padding: 2px;
+  background-color: #cccccc;
+}
+
+table tr {
+  font-family: arial, monospace;
+  color: black;
+  font-size:14px;
+  background-color: white;
+}
+
+table tr.odd {
+  background-color: #AAAAAA;
+}
+
+table tr td, th{
+  border-bottom: 1px solid black;
+  padding: 3px;
+} 
 .hide {display:none;}
+.show {display:block;}
+
+
+
 /* //////////////////////////////////////////////// */
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+ul.pagination li {display: inline;}
+
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+ul.pagination li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+
+
+/* //////////////////////////////////////////////// */
+iframe#hide { position:absolute; visibility:hidden; left:0; top:0; } 
