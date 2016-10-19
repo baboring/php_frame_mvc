@@ -56,16 +56,10 @@ window.onload = function() {
     //btnSearch.addEventListener('click',function (event) {});
 
     function clickDelete( idx, user_name ) {
-        //document.location = "<?=Navi::GetUrl(Navi::Join,'delete');?>/"+val;
-        if(confirm("[Delete] Are you sure '" + user_name + "' ?")) {
-            var params = {};
-            params['idx'] = val;
-            params['name'] = user_name;
-            post("<?=Navi::GetUrl(Navi::Member,'delete');?>",params,"post");
-        }
+        alert('Not Allowed');
     }
     function clickSelect( uid, user_name ) {
-        call_API('?func=SetClientInfo&uid=' + uid + '&name=' + user_name);
+        //call_API('?func=SetClientInfo&uid=' + uid + '&name=' + user_name);
     }
 
     var buttons = document.getElementsByClassName("btnDelete");

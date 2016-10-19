@@ -1,4 +1,5 @@
 <?php
+    require_once ('_server/views/CallReceiver_API.php');
    //////////////////////////////////////////////////////////////////////////
     $key = GetSafeValueGet('key');
     if($key == null) {
@@ -19,7 +20,6 @@
             echo 'class="active"';
     }
 
-    require_once ('_server/views/ContentsView_API.php');
 ?>
 <!-- local script functions -->
 <script type='text/javascript'>

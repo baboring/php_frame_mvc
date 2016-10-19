@@ -42,6 +42,10 @@
 
 <!-- local script functions -->
 <script>
+function DeleteClient(res, uid, user_name) {
+
+    var obj = document.location.reload();
+}
 
 window.onload = function() {
 
@@ -58,13 +62,15 @@ window.onload = function() {
     });
     //btnSearch.addEventListener('click',function (event) {});
     
-    function clickDelete( idx, user_name ) {
-        //document.location = "<?=Navi::GetUrl(Navi::Join,'delete');?>/"+val;
+    function clickDelete( uid, user_name ) {
         if(confirm("[Delete] Are you sure '" + user_name + "' ?")) {
-            var params = {};
-            params['idx'] = val;
-            params['name'] = user_name;
-            post("<?=Navi::GetUrl(Navi::Member,'delete');?>",params,"post");
+            // var params = {};
+            // params['uid'] = uid;
+            // params['name'] = user_name;
+            // post("<?=Navi::GetUrl(Navi::Member,'Delete');?>",params,"post");
+
+            call_API('?func=DeleteClient&uid=' + uid + '&name=' + user_name);
+            
         }
     }
     function clickSelect( uid, user_name ) {

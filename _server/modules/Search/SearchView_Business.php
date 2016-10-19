@@ -39,16 +39,20 @@
 
 <!-- local script functions -->
 <script>
+function DeleteBusiness(res, uid, user_name) {
+    //alert(res+'/'+uid);
+    var obj = document.location.reload();
+}
 
 window.onload = function() {
 
-    function clickDelete( idx, user_name ) {
-        //document.location = "<?=Navi::GetUrl(Navi::Join,'delete');?>/"+val;
+    function clickDelete( uid, user_name ) {
         if(confirm("[Delete] Are you sure '" + user_name + "' ?")) {
-            var params = {};
-            params['idx'] = val;
-            params['name'] = user_name;
-            post("<?=Navi::GetUrl(Navi::Member,'delete');?>",params,"post");
+            // var params = {};
+            // params['uid'] = uid;
+            // params['name'] = user_name;
+            // post("<?=Navi::GetUrl(Navi::Member,'delete');?>",params,"post");
+            call_API('?func=DeleteBusiness&uid=' + uid + '&name=' + user_name);
         }
     }
     function clickSelect( uid, user_name ) {

@@ -275,17 +275,16 @@
                 } 
             }
             catch(Exception $e)  {  //Some error occured. (i.e. violation of constraints)
-                GlobalData::SetDebug($szQuery);
+                GlobalData::SetDebug($e);
                 throw $e;
             }
             catch(PDOException $e) {
-                GlobalData::SetDebug($szQuery);
+                GlobalData::SetDebug($e);
                 if(stripos($e->getMessage(), 'DATABASE IS LOCKED') !== false) {
                     // This should be specific to SQLite, sleep for 0.25 seconds
                     // and try again.  We do have to commit the open transaction first though
                     usleep(250000);
                 } else {
-                    GlobalData::SetDebug(dbCon::GetConnection()->errorInfo());
                     throw $e;
                 }
                 return -1;
@@ -323,17 +322,16 @@
                     throw new PDOException('failed Insert Client');
             }
             catch(Exception $e)  {  //Some error occured. (i.e. violation of constraints)
-                GlobalData::SetDebug($szQuery);
+                GlobalData::SetDebug($e);
                 throw $e;
             }
             catch(PDOException $e) {
-                GlobalData::SetDebug($szQuery);
+                GlobalData::SetDebug($e);
                 if(stripos($e->getMessage(), 'DATABASE IS LOCKED') !== false) {
                     // This should be specific to SQLite, sleep for 0.25 seconds
                     // and try again.  We do have to commit the open transaction first though
                     usleep(250000);
                 } else {
-                    GlobalData::SetDebug($szQuery);
                     throw $e;
                 }
                 return false;
@@ -373,17 +371,16 @@
                     throw new PDOException('failed Insert Buisness');
             }
             catch(Exception $e)  {  //Some error occured. (i.e. violation of constraints)
-                GlobalData::SetDebug($szQuery);
+                GlobalData::SetDebug($e);
                 throw $e;
             }
             catch(PDOException $e) {
-                GlobalData::SetDebug($szQuery);
+                GlobalData::SetDebug($e);
                 if(stripos($e->getMessage(), 'DATABASE IS LOCKED') !== false) {
                     // This should be specific to SQLite, sleep for 0.25 seconds
                     // and try again.  We do have to commit the open transaction first though
                     usleep(250000);
                 } else {
-                    GlobalData::SetDebug($szQuery);
                     throw $e;
                 }
                 return false;
@@ -417,17 +414,16 @@
                     throw new PDOException('failed Insert Vehicle');
             }
             catch(Exception $e)  {  //Some error occured. (i.e. violation of constraints)
-                GlobalData::SetDebug($szQuery);
+                GlobalData::SetDebug($e);
                 throw $e;
             }
             catch(PDOException $e) {
-                GlobalData::SetDebug($szQuery);
+                GlobalData::SetDebug($e);
                 if(stripos($e->getMessage(), 'DATABASE IS LOCKED') !== false) {
                     // This should be specific to SQLite, sleep for 0.25 seconds
                     // and try again.  We do have to commit the open transaction first though
                     usleep(250000);
                 } else {
-                    GlobalData::SetDebug($szQuery);
                     throw $e;
                 }
                 return false;
@@ -462,17 +458,16 @@
                 }
             }
             catch(Exception $e)  {  //Some error occured. (i.e. violation of constraints)
-                GlobalData::SetDebug($szQuery);
+                GlobalData::SetDebug($e);
                 throw $e;
             }
             catch(PDOException $e) {
-                GlobalData::SetDebug($szQuery);
+                GlobalData::SetDebug($e);
                 if(stripos($e->getMessage(), 'DATABASE IS LOCKED') !== false) {
                     // This should be specific to SQLite, sleep for 0.25 seconds
                     // and try again.  We do have to commit the open transaction first though
                     usleep(250000);
                 } else {
-                    GlobalData::SetDebug($szQuery);
                     throw $e;
                 }
                 return false;
@@ -502,22 +497,72 @@
         }
 
         public static function DeleteUserByUid($uid) {
-            if(strlen(trim($uid) < 1)) {
-                self::$err_msg = 'need a uid';
+            try {
+                if(null == $uid || $uid < 1)
+                    throw new Exception('need a uid');
+
+                /* Begin a transaction, turning off autocommit */
+                if(!dbCon::beginTransaction())
+                    throw new Exception('Failed : beginTransaction');
+                
+                $szQuery = "delete from account where uid = :uid";
+                $stmt = dbCon::GetConnection()->prepare($szQuery);
+                if(!$stmt->execute(array(':uid' => $uid))) 
+                    throw new PDOException('faile to delete account table');
+
+                $szQuery = "delete from client where u_uid = :uid";
+                $stmt = dbCon::GetConnection()->prepare($szQuery);
+                if(!$stmt->execute(array(':uid' => $uid))) 
+                    throw new PDOException('faile to delete client table');
+
+                $szQuery = "delete from business where u_uid = :uid";
+                $stmt = dbCon::GetConnection()->prepare($szQuery);
+                if(!$stmt->execute(array(':uid' => $uid))) 
+                    throw new PDOException('faile to delete business table');
+
+                $szQuery = "delete from records where u_uid = :uid";
+                $stmt = dbCon::GetConnection()->prepare($szQuery);
+                if(!$stmt->execute(array(':uid' => $uid))) 
+                    throw new PDOException('faile to delete records table');
+                                
+                $szQuery = "delete from services where s_owner_uid = :uid";
+                $stmt = dbCon::GetConnection()->prepare($szQuery);
+                if(!$stmt->execute(array(':uid' => $uid))) 
+                    throw new PDOException('faile to delete services table');
+
+                $szQuery = "delete from vehicles where v_owner_uid = :uid";
+                $stmt = dbCon::GetConnection()->prepare($szQuery);
+                if(!$stmt->execute(array(':uid' => $uid))) 
+                    throw new PDOException('faile to delete vehicles table');
+
+                // have to change relationship
+                $szQuery = "delete from task where s_uid = :uid";
+                $stmt = dbCon::GetConnection()->prepare($szQuery);
+                if(!$stmt->execute(array(':uid' => $uid))) 
+                     throw new PDOException('faile to delete task table');
+
+                dbCon::commit();
+            }
+            catch(PDOException $e)  {  //Some error occured. (i.e. violation of constraints)
+                self::$err_msg = 'Error : '.$e->getMessage();
+                GlobalData::SetDebug($e);
                 return false;
             }
-            $szQuery = "delete from account where uid = ".$uid;
-            
-            try {
-                $res = dbCon::GetConnection()->exec($szQuery);
-                if(!empty($res) && $res > 0)
-                   return true;
-                self::$err_msg = 'not exist uid';
+            catch(PDOException $e) {
+                self::$err_msg = 'Error : '.$e->getMessage();
+                GlobalData::SetDebug($e);
+                if(stripos($e->getMessage(), 'DATABASE IS LOCKED') !== false) {
+                    // This should be specific to SQLite, sleep for 0.25 seconds
+                    // and try again.  We do have to commit the open transaction first though
+                    usleep(250000);
+                } else {
+                    throw $e;
+                }
+                dbCon::rollback();
+                return false;
             }
-            catch(Exception $e) { //Some error occured. (i.e. violation of constraints)
-                echo $e;
-            }
-            return false;
+            GlobalData::SetDebug('');
+            return true;
         }
     }
 
